@@ -125,6 +125,20 @@ def refine_list_formatting(l1):
 	return tuple(l2)
 
 
+def del_student(student_id):
+	cursor = db.cursor()
+	query = "delete from student where ID=%s"
+	args = (student_id)
+	cursor.execute(query, (args,))
+	db.commit()
+
+def del_book(book_id):
+	cursor = db.cursor()
+	query = "delete from book where ID=%s"
+	cursor.execute(query, (book_id,))
+	db.commit()
+
+
 def check_if_book_exists(book_id):
 	cursor.execute("SELECT * FROM book WHERE id=%s", (book_id, ))
 	books = cursor.fetchall()
@@ -167,7 +181,9 @@ while True:
 	print('\t\t\t\t\t\t\t5. Register Student')
 	print('\t\t\t\t\t\t\t6. Register Book')
 	print('\t\t\t\t\t\t\t7. Issued Books')
-	print('\t\t\t\t\t\t\t8. Exit')
+	print('\t\t\t\t\t\t\t8. Delete Student Record')
+	print('\t\t\t\t\t\t\t9. Delete Book Record')
+	print('\t\t\t\t\t\t\t10. Exit')
 	choice = input('\n\t\t\t\t\t\t\tEnter your Choice: ')
 	try:
 		choice = int(choice)
@@ -329,6 +345,21 @@ while True:
 			fetch_issued_books(s_id)
 
 	elif choice == 8:
+		os.system('cls' if os.name == 'nt' else 'clear')
+		print('\n\t\t\t\t\t\t   ***** Delete a Student Record *****')
+		get_students()
+		student_id = input("\nEnter Student ID: ")
+		del_student(student_id)
+
+	elif choice == 9:
+		os.system('cls' if os.name == 'nt' else 'clear')
+
+		print('\n\t\t\t\t\t\t   ***** Delete a Book Record *****')
+		get_books()
+		book_id = input("\nEnter Book ID: ")
+		del_book(book_id)
+
+	elif choice == 10:
 		sys.exit('Bye//')
 
 	else:
